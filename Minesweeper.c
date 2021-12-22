@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
     srand(time(NULL));  //seed for random generator
     field = generateField(grid_size, no_of_mines);
     printField(grid_size, field);
-    while (!allOpened(field, grid_size) || allFlagged(field, grid_size, no_of_mines)){
+    while (!allOpened(field, grid_size)){
     guess(field, grid_size);
     printField(grid_size, field);
     if (allOpened(field, grid_size)==1){
@@ -225,15 +225,9 @@ void guess(struct cell** field, int grid_size ){
   x = atoi(&str[1])-1;
 
 if(str[0]== '?'){
-  printf("a questionmark %c \n", str[0]);
   y = (int)str[1]-65;
   x = atoi(&str[2])-1;
 }
-
-  printf("string: %s\n", str);
-  printf("x (Zahl): %d\n", x);
-  printf("y (ABC): %d\n", y);
-
   if (x < 0 || y < 0 || x > grid_size-1 || y > grid_size-1) {
     printf("Please target an existing cell.\n");
     guess(field, grid_size);
@@ -261,6 +255,7 @@ void openCell(int i, int j, struct cell** field, int grid_size ){
     return;
   }
   field[i][j].isOpened = 1;
+  field[i][j].isFlagged = 0;
   // recursively call openCell for all neighbour cells with 0 neighbouring mines
   if (field[i][j].adjacent_mines == 0) {
     if (j-1 >= 0 && field[i][j-1].adjacent_mines == 0) {
@@ -289,17 +284,23 @@ int allOpened(struct cell** field, int grid_size){
 }
 int allFlagged(struct cell** field, int grid_size, int no_of_mines){
   int count = 0;
+  int flagCount = 0;
   for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
       if (field[i][j].mine == 1 && field[i][j].isFlagged == 1) {
         count++;
       }
+      if (field[i][j].isFlagged == 1) {
+        flagCount++;
+      }
     }
   }
 
   int result = count == no_of_mines ? 1 : 0;
+  // Show amount of mines in the game minus the amount of marked mines. Also show if this sum is negative, meaning a cell was marked as mine which does not have a mine.
+  printf("There are %d mines remaining.\n", no_of_mines - flagCount);
   if(count == no_of_mines) {
-    printf("all mines flagged %d\n", result);
+    printf("All mines flagged!");
     }
   return result;
 }
@@ -338,6 +339,7 @@ char input[2];
  fflush(stdin);
   if(input[0] == 'y' ||input[0] == 'Y'){
     printf("Ok, let's play again. \n");
+    field = generateField(grid_size, no_of_mines);
   }
   else if (input[0] == 'n' || input[0] == 'N' ) {
     printf("Ok, goodbye. \n");
