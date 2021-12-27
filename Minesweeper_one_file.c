@@ -75,7 +75,7 @@ int main(int argc, char *argv[]){
 struct cell** generateField(){
 //dynamically allocate memory for a nested array of fields according to grid size
 
-  int g = grid_size, i, j, count;
+  int g = grid_size, i, j;
 
   struct cell** field = (struct cell**)malloc(g * sizeof(struct cell*));
   if (field == NULL){
@@ -89,7 +89,7 @@ struct cell** generateField(){
     exit(1);
   }
   }
-  //initialize with default values
+  // initialize with default values
   for (i = 0; i < g; i++){
     for (j = 0; j < g; j++){
       field[i][j] = (struct cell) {.mine= 0, .adjacent_mines = 0, .isOpened = 0, .isFlagged = 0};
@@ -151,7 +151,7 @@ struct cell** generateField(){
     }
   }
 
-  //randomly open one field that is not a mine
+  // randomly open one field that is not a mine
   openFirstCell(field);
   return field;
 };
