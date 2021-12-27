@@ -6,6 +6,7 @@
 #include "gamestatistics.h"
 
 
+
 // function prototypes
 void printField(struct cell** field);
 void guess(struct cell** field);

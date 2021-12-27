@@ -3,6 +3,7 @@
 #include <time.h>
 #include <string.h>
 
+
 // function prototypes
 struct cell** generateField();
 void printField(struct cell** field);

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "gamestatistics.h"
 
+
 char name[25];
 int statistics[4]={0,0,0,0};
 
