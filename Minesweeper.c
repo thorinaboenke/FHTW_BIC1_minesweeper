@@ -56,10 +56,18 @@ int main(int argc, char *argv[]){
 }
 
 
-// print the playing field
+/**
+ Prints the playing field.
 
-// print the playing field from an array of cells.
+ Prints the playing field (a nested array of cells) with X (letters) and Y (nnumbers) coordinates.
+ Depending on the flags set on a cell, the following output is printed:
+ isFlagged == 1 : '?'
+ isOpened == 0 : '-'
+ isOpened == 1 && mine == 0 : '<number of adjacent mines'
+ isOpened == 1 && mine == 1 : 'M'
 
+ \param field a pointer to a nested array of cells
+ */
 void printField(Cell** field){
   // print x coordinates
   printf(" \t");
@@ -69,7 +77,7 @@ void printField(Cell** field){
   }
   printf(" \n");
   // print field
-  // print x coordinates
+  // print y coordinates
   for (int i = 0 ; i < grid_size; i++ ){
     printf("%d", i+1);
     printf(" \t");
@@ -82,10 +90,10 @@ void printField(Cell** field){
         if(field[i][j].mine == 1){
           printf("M\t");
         }
-        else if (field[i][j].adjacent_mines == 0){
+        else if (field[i][j].adjacentMines == 0){
           printf(" \t");
         } else {
-        printf("%d\t", field[i][j].adjacent_mines);}
+        printf("%d\t", field[i][j].adjacentMines);}
         }
        else {
         printf("-\t");
@@ -95,8 +103,17 @@ void printField(Cell** field){
   }
 }
 
-// prompt player to choose a cell to reveal
-// validates player input, reveals all mines if a mine was hit, reveals cell otherwise, or flags cell if '?' option was specified.
+
+
+/**
+ Lets the player choose a cell to reveal.
+
+ Prompts player to choose a cell to reveal.
+ Validates player input, reveals all mines if a mine was hit, reveals chosen cell otherwise.
+ Alternatively flags cell as potentially containing a mine if '?' option was specified in front of the coordinates.
+
+ \param field a pointer to a nested array of cells
+ */
 void guess(Cell** field){
   printf("Enter the cell you want to target in the format A2 and hit Enter.\n");
   char str[5];
@@ -105,24 +122,29 @@ void guess(Cell** field){
   int x;
   int y;
 
+  // converts player input into array indices
   y = (int)str[0]-65;
   x = atoi(&str[1])-1;
 
-if(str[0]== '?'){
+  if(str[0]== '?'){
   y = (int)str[1]-65;
   x = atoi(&str[2])-1;
-}
+  }
+  // prompts player again for input if input was invalid
   if (x < 0 || y < 0 || x > grid_size-1 || y > grid_size-1) {
     printf("Please target an existing cell.\n");
     guess(field);
   }
+  // flags mine if '?' was specified
   else if (str[0]== '?' && field[x][y].isOpened == 0){
-    field[x][y].isFlagged = 1; // flag mine
+    field[x][y].isFlagged = 1;
   }
+  // prompts player again for input if input cell was already opened
   else if (field[x][y].isOpened == 1){
     printf("Please target an unopened cell.\n");
     guess(field);
   }
+  // reveals all mines if a mine was hit
   else if (field[x][y].mine == 1) {
     revealAllMines(field);
     printf("Oh No. You hit a mine. You lost.\n");
@@ -134,6 +156,15 @@ if(str[0]== '?'){
   }
 };
 
+/**
+ Opens a cell
+
+ Sets isOpen to 1 and isFlagged to 0.
+ In case of no neighbouring mines, calls itself recursively for all neighbour cells with 0 neighbouring mine.
+ \param  i integer x coordinate of cell to reveal
+ \param  j integer y coordinate of cell to reveal
+ \param field a pointer to a nested array of cells
+ */
 void openCell(int i, int j, Cell** field){
   if (field[i][j].isOpened == 1) {
     return;
@@ -141,22 +172,31 @@ void openCell(int i, int j, Cell** field){
   field[i][j].isOpened = 1;
   field[i][j].isFlagged = 0;
   // recursively call openCell for all neighbour cells with 0 neighbouring mines
-  if (field[i][j].adjacent_mines == 0) {
-    if (j-1 >= 0 && field[i][j-1].adjacent_mines == 0) {
+  if (field[i][j].adjacentMines == 0) {
+    if (j-1 >= 0 && field[i][j-1].adjacentMines == 0) {
       openCell(i,j-1, field);
       }
-    if (i-1 >= 0 && field[i-1][j].adjacent_mines == 0) {
+    if (i-1 >= 0 && field[i-1][j].adjacentMines == 0) {
       openCell(i-1,j, field);
     }
-    if (i+1 < grid_size && field[i+1][j].adjacent_mines == 0) {
+    if (i+1 < grid_size && field[i+1][j].adjacentMines == 0) {
       openCell(i+1,j, field);
     }
-    if (j+1 < grid_size && field[i][j+1].adjacent_mines == 0) {
+    if (j+1 < grid_size && field[i][j+1].adjacentMines == 0) {
       openCell(i,j+1, field);
     }
   }
 }
 
+/**
+ Checks if all none mine cells are opened
+If all non-mine cells were opened , prints a winning massage and updates statistics.
+
+ \param field a pointer to a nested array of cells
+
+ \return integer indicating if all cells are opened (1) or not (0)
+
+ */
 int allOpened(Cell** field){
   for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
@@ -170,6 +210,19 @@ int allOpened(Cell** field){
   statistics[0]++; // games played
   return 1;
 }
+
+/**
+ Checks if all mine cells are flagged.
+
+ Counts correctly flagged cells.
+ Prints amount of mines in the game minus the amount of marked mines. Also show if this sum is negative, meaning a cell was marked as mine which does not have a mine.
+ If all mines were flagged correctly, print a winning massage and updates statistics.
+
+ \param field a pointer to a nested array of cells
+
+ \return result indicating if all mines are flagged (1) or not (0)
+
+ */
 int allFlagged(Cell** field){
   int count = 0;
   int flagCount = 0;
@@ -195,6 +248,16 @@ int allFlagged(Cell** field){
   return result;
 }
 
+/**
+ Checks if the game is lost (i.e. a mine has been revealed)
+
+ Checks for every cell if both mine and isOpened are 1.
+
+ \param field a pointer to a nested array of cells
+
+ \return result indicating if the game is lost (1) or not (0)
+
+ */
 int lost(Cell** field){
   for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
@@ -206,6 +269,14 @@ int lost(Cell** field){
   return 0;
 }
 
+/**
+ Reveals all mines.
+
+ Set isOpened to 1 for every cell containing a mine.
+
+ \param field a pointer to a nested array of cells
+
+ */
 void revealAllMines(Cell** field) {
    for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
@@ -216,6 +287,16 @@ void revealAllMines(Cell** field) {
   }
 }
 
+/**
+ Restarts or ends game.
+
+Prompts player if they want to play again.
+Yes: calls saveStatistics(), frees the memory for the current playing field.
+No: calls saveStatistics(), frees the memory for the current playing field, exits the program.
+
+ \param field a pointer to a nested array of cells
+
+ */
 
 int playAgain(Cell** field){
 char input[2];

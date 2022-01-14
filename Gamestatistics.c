@@ -6,14 +6,19 @@
 #include <string.h>
 #include "gamestatistics.h"
 
-
+/**
+ The name entered by the player. Statistics will be loaded from/saved in a file <name>.txt
+ */
 char name[25];
+/**
+ Game statistics. loaded from/saved in a file <name>.txt. [0]played games, [1]lost games, [2]won games and [3]revealed cells
+ */
 int statistics[4]={0,0,0,0};
 
 /**
  Loads player statistics.
 
- If a player has already played and statistics are saved in the same directory in a .txt file under their name they are read into statistics array and printed to the screen
+ If a player has already played and statistics are saved in the same directory in a .txt file under their name they are read into statistics array and printed to the screen with printStatistics().
  */
 void loadStatistics(){
   char filename[25];
@@ -51,9 +56,9 @@ void loadStatistics(){
 
 
 /**
- Saves player statistics
+  Saves player statistics
 
-Saves player statistics from statistics array into .txt file under the players name
+  Saves player statistics from statistics array into .txt file under the players name
  */
 void saveStatistics(){
   statistics[0]++; // games played
@@ -84,7 +89,7 @@ void saveStatistics(){
 /**
 Prints player statistics
 
-Prints player statistics (games played, games won, games lost, openend cells) to the screen, used by loadStatistics()
+Prints player statistics (games played, games won, games lost, openend cells) to the screen, used by loadStatistics().
 
  */
 void printStatistics(){
