@@ -18,6 +18,21 @@ int allOpened(Cell** field);
 int allFlagged(Cell** field);
 
 
+
+/**
+ Plays minesweeper
+
+ Determines the gridsize and numer of mines from the command line arguments passed to the program.
+ Defaults to 10x10 cells and 25 mines.
+ Supports grid sizes between 5x5 and 24x24.
+ Number of mines needs to be > 2, but not higher than half the number of cells.
+ Attempts to load statistics with loadStatistics().
+ Generates a new playing field with generateField().
+ Prints the initial field with printField().
+ While neither the winning conditions are fulfilled (allOpened() and allFlagged()) and the player has not lost/hit a mine lost() the program prompts the player to guess a field and prints the new state of the field to the screen with printField().
+ Upon exiting this loop, the player is promted if they want to play again and the outer loop starts again from loadStatistics() OR the program exits.
+
+ */
 int main(int argc, char *argv[]){
   grid_size = 10;
   no_of_mines = 20;
