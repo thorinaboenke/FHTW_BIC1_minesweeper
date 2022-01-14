@@ -1,11 +1,11 @@
+/** \file
+* \brief This file contains the main program for a minesweeper game */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
 #include "setup.h"
 #include "gamestatistics.h"
-
-
 
 // function prototypes
 void printField(struct cell** field);
@@ -55,6 +55,11 @@ int main(int argc, char *argv[]){
   return 0;
 }
 
+
+// print the playing field
+
+// print the playing field from an array of cells.
+
 void printField(struct cell** field){
   // print x coordinates
   printf(" \t");
@@ -63,7 +68,7 @@ void printField(struct cell** field){
     printf(" \t");
   }
   printf(" \n");
-  // print  field
+  // print field
   // print x coordinated
   for (int i = 0 ; i < grid_size; i++ ){
     printf("%d", i+1);
@@ -90,6 +95,8 @@ void printField(struct cell** field){
   }
 }
 
+// prompt player to choose a cell to reveal
+// validates player input, reveals all mines if a mine was hit, reveals cell otherwise, or flags cell if '?' option was specified.
 void guess(struct cell** field){
   printf("Enter the cell you want to target in the format A2 and hit Enter.\n");
   char str[5];
