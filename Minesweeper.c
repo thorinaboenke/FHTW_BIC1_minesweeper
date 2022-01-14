@@ -8,14 +8,14 @@
 #include "gamestatistics.h"
 
 // function prototypes
-void printField(struct cell** field);
-void guess(struct cell** field);
-void openCell(int x, int y, struct cell** field);
-void revealAllMines(struct cell** field);
-int lost(struct cell** field);
-int playAgain(struct cell** field);
-int allOpened(struct cell** field);
-int allFlagged(struct cell** field);
+void printField(Cell** field);
+void guess(Cell** field);
+void openCell(int x, int y, Cell** field);
+void revealAllMines(Cell** field);
+int lost(Cell** field);
+int playAgain(Cell** field);
+int allOpened(Cell** field);
+int allFlagged(Cell** field);
 
 
 int main(int argc, char *argv[]){
@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
 
 // print the playing field from an array of cells.
 
-void printField(struct cell** field){
+void printField(Cell** field){
   // print x coordinates
   printf(" \t");
   for (int i = 0 ; i < grid_size; i++ ){
@@ -69,7 +69,7 @@ void printField(struct cell** field){
   }
   printf(" \n");
   // print field
-  // print x coordinated
+  // print x coordinates
   for (int i = 0 ; i < grid_size; i++ ){
     printf("%d", i+1);
     printf(" \t");
@@ -97,7 +97,7 @@ void printField(struct cell** field){
 
 // prompt player to choose a cell to reveal
 // validates player input, reveals all mines if a mine was hit, reveals cell otherwise, or flags cell if '?' option was specified.
-void guess(struct cell** field){
+void guess(Cell** field){
   printf("Enter the cell you want to target in the format A2 and hit Enter.\n");
   char str[5];
   fgets(str, 5, stdin);
@@ -134,7 +134,7 @@ if(str[0]== '?'){
   }
 };
 
-void openCell(int i, int j, struct cell** field){
+void openCell(int i, int j, Cell** field){
   if (field[i][j].isOpened == 1) {
     return;
   }
@@ -157,7 +157,7 @@ void openCell(int i, int j, struct cell** field){
   }
 }
 
-int allOpened(struct cell** field){
+int allOpened(Cell** field){
   for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
       if (field[i][j].mine == 0 && field[i][j].isOpened == 0) {
@@ -170,7 +170,7 @@ int allOpened(struct cell** field){
   statistics[0]++; // games played
   return 1;
 }
-int allFlagged(struct cell** field){
+int allFlagged(Cell** field){
   int count = 0;
   int flagCount = 0;
   for (int i = 0; i < grid_size; i++){
@@ -195,7 +195,7 @@ int allFlagged(struct cell** field){
   return result;
 }
 
-int lost(struct cell** field){
+int lost(Cell** field){
   for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
       if (field[i][j].mine == 1 && field[i][j].isOpened == 1) {
@@ -206,7 +206,7 @@ int lost(struct cell** field){
   return 0;
 }
 
-void revealAllMines(struct cell** field) {
+void revealAllMines(Cell** field) {
    for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
       if (field[i][j].mine == 1) {
@@ -217,7 +217,7 @@ void revealAllMines(struct cell** field) {
 }
 
 
-int playAgain(struct cell** field){
+int playAgain(Cell** field){
 char input[2];
  printf("Would you like to play again? y/n \n");
  scanf("%c", &input[0]);

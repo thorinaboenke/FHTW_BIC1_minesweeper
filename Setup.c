@@ -6,7 +6,7 @@
 #include "setup.h"
 
 // global variables
-struct cell** field;
+Cell** field;
 int grid_size;
 int no_of_mines;
 
@@ -23,18 +23,18 @@ int no_of_mines;
 
  */
 
-struct cell** generateField(){
+Cell** generateField(){
 // dynamically allocate memory for a nested array of Cell according to grid size
 
   int g = grid_size, i, j;
 
-  struct cell** field = (struct cell**)malloc(g * sizeof(struct cell*));
+  Cell** field = (Cell**)malloc(g * sizeof(Cell*));
   if (field == NULL){
     fprintf(stderr, "Could not allocate memory\n");
     exit(1);
   }
   for (i = 0; i < g; i++){
-    field[i] = (struct cell*)malloc(g * sizeof(struct cell));
+    field[i] = (Cell*)malloc(g * sizeof(Cell));
     if (field[i] == NULL){
     fprintf(stderr, "Could not allocate memory\n");
     exit(1);
@@ -43,7 +43,7 @@ struct cell** generateField(){
   // initialize with default values
   for (i = 0; i < g; i++){
     for (j = 0; j < g; j++){
-      field[i][j] = (struct cell) {.mine = 0, .adjacent_mines = 0, .isOpened = 0, .isFlagged = 0};
+      field[i][j] = (Cell) {.mine = 0, .adjacent_mines = 0, .isOpened = 0, .isFlagged = 0};
     }
   }
 
@@ -116,7 +116,7 @@ struct cell** generateField(){
  (max. half the number of cells will contain a mine, so the recursion will eventually end)
 
  */
-void placeMine(struct cell** field){
+void placeMine(Cell** field){
   int x = rand() % grid_size;
   int y = rand() % grid_size;
   if (field[x][y].mine == 0) {
@@ -134,7 +134,7 @@ void placeMine(struct cell** field){
  (max. half the number of cells will contain a mine, so the recursion will eventually end)
 
  */
-void openFirstCell(struct cell** field){
+void openFirstCell(Cell** field){
   int x = rand() % grid_size;
   int y = rand() % grid_size;
   if (field[x][y].mine != 1 && field[x][y].adjacent_mines != 0) {
