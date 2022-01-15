@@ -11,7 +11,7 @@
 Playing field.
 Pointer to a nested array cells representing the playing field
  */
-Cell** field;
+Cell **field;
 
 /**
 Grid size for the playing field.
@@ -134,7 +134,7 @@ Cell** generate_field(){
  \param field a pointer to a nested array of cells
 
  */
-void place_mine(Cell** field){
+void place_mine(Cell **field){
   int x = rand() % grid_size;
   int y = rand() % grid_size;
   if (field[x][y].is_mine == 0) {
@@ -154,7 +154,7 @@ void place_mine(Cell** field){
  \param field a pointer to a nested array of cells
 
  */
-void open_first_cell(Cell** field){
+void open_first_cell(Cell **field){
   int x = rand() % grid_size;
   int y = rand() % grid_size;
   if (field[x][y].is_mine != 1 && field[x][y].adjacent_mines != 0) {

@@ -8,14 +8,14 @@
 #include "gamestatistics.h"
 
 // function prototypes
-int check_all_cells_opened(Cell** field);
-int check_all_mines_flagged(Cell** field);
-void guess(Cell** field);
-int lost(Cell** field);
-void open_cell(int x, int y, Cell** field);
-int play_again(Cell** field);
-void print_field(Cell** field);
-void reveal_all_mines(Cell** field);
+int check_all_cells_opened(Cell **field);
+int check_all_mines_flagged(Cell **field);
+void guess(Cell **field);
+int lost(Cell **field);
+void open_cell(int x, int y, Cell **field);
+int play_again(Cell **field);
+void print_field(Cell **field);
+void reveal_all_mines(Cell **field);
 
 /**
  Plays minesweeper
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]){
 
  \param field a pointer to a nested array of cells
  */
-void print_field(Cell** field){
+void print_field(Cell **field){
   // print x coordinates
   printf(" \t");
   for (int i = 0 ; i < grid_size; i++ ){
@@ -127,7 +127,7 @@ void print_field(Cell** field){
 
  \param field a pointer to a nested array of cells
  */
-void guess(Cell** field){
+void guess(Cell **field){
   printf("Enter the cell you want to target in the format A2 and hit Enter.\n");
   char str[5];
   fgets(str, 5, stdin);
@@ -178,7 +178,7 @@ void guess(Cell** field){
  \param  j integer y coordinate of cell to reveal
  \param field a pointer to a nested array of cells
  */
-void open_cell(int i, int j, Cell** field){
+void open_cell(int i, int j, Cell **field){
   if (field[i][j].is_opened == 1) {
     return;
   }
@@ -210,7 +210,7 @@ If all non-mine cells were opened , prints a winning massage and updates statist
  \return integer indicating if all cells are opened (1) or not (0)
 
  */
-int check_all_cells_opened(Cell** field){
+int check_all_cells_opened(Cell **field){
   for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
       if (field[i][j].is_mine == 0 && field[i][j].is_opened == 0) {
@@ -236,7 +236,7 @@ int check_all_cells_opened(Cell** field){
  \return result indicating if all mines are flagged (1) or not (0)
 
  */
-int check_all_mines_flagged(Cell** field){
+int check_all_mines_flagged(Cell **field){
   int count = 0;
   int flagCount = 0;
   for (int i = 0; i < grid_size; i++){
@@ -271,7 +271,7 @@ int check_all_mines_flagged(Cell** field){
  \return result indicating if the game is lost (1) or not (0)
 
  */
-int lost(Cell** field){
+int lost(Cell **field){
   for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
       if (field[i][j].is_mine == 1 && field[i][j].is_opened == 1) {
@@ -290,7 +290,7 @@ int lost(Cell** field){
  \param field a pointer to a nested array of cells
 
  */
-void reveal_all_mines(Cell** field) {
+void reveal_all_mines(Cell **field) {
    for (int i = 0; i < grid_size; i++){
     for (int j = 0; j < grid_size; j++){
       if (field[i][j].is_mine == 1) {
@@ -311,7 +311,7 @@ No: calls save_statistics(), frees the memory for the current playing field, exi
 
  */
 
-int play_again(Cell** field){
+int play_again(Cell **field){
 char input[2];
  printf("Would you like to play again? y/n \n");
  scanf("%c", &input[0]);
