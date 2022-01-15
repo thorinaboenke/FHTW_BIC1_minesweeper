@@ -22,14 +22,16 @@ int statistics[4]={0,0,0,0};
  */
 void load_statistics(){
   char filename[25];
+  fflush(stdin);
   printf("Please enter your name (20 characters max.):\n");
   fgets(filename, 21, stdin);
+  fflush(stdin);
   //fgets puts a newline character, so remove it first
   int len = strlen(filename);
   if(filename[len-1] == '\n'){
     filename[len-1] = 0;
     }
-  // copy name to global variable name
+  // copy to global variable name
   strcpy(name, filename);
   strcat(filename, ".txt");
   FILE* f;
@@ -39,6 +41,7 @@ void load_statistics(){
     }
       for(int i=0; i<4; i++){
           if(fscanf(f, "%d", &statistics[i]) != 1){
+            // for example if file does not contain integers
               fprintf(stderr, "Error reading from file\n");
               exit(1);
           }
