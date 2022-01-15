@@ -18,9 +18,9 @@ int statistics[4]={0,0,0,0};
 /**
  Loads player statistics.
 
- If a player has already played and statistics are saved in the same directory in a .txt file under their name they are read into statistics array and printed to the screen with printStatistics().
+ If a player has already played and statistics are saved in the same directory in a .txt file under their name they are read into statistics array and printed to the screen with print_statistics().
  */
-void loadStatistics(){
+void load_statistics(){
   char filename[25];
   printf("Please enter your name (20 characters max.):\n");
   fgets(filename, 21, stdin);
@@ -51,8 +51,8 @@ void loadStatistics(){
     fprintf(stderr,"fclose was not successful!\n");
     exit(1);
   }
-  printStatistics();
-};
+  print_statistics();
+}
 
 
 /**
@@ -60,7 +60,7 @@ void loadStatistics(){
 
   Saves player statistics from statistics array into .txt file under the players name
  */
-void saveStatistics(){
+void save_statistics(){
   statistics[0]++; // games played
   printf("Saving statistics.\n");
   char filename[25];
@@ -83,20 +83,20 @@ void saveStatistics(){
     fprintf(stderr,"fclose was not successful!\n");
     return;
   }
-};
+}
 
 
 /**
 Prints player statistics
 
-Prints player statistics (games played, games won, games lost, openend cells) to the screen, used by loadStatistics().
+Prints player statistics (games played, games won, games lost, openend cells) to the screen, used by load_statistics().
 
  */
-void printStatistics(){
+void print_statistics(){
   printf("Player %s\n", name);
   printf("Your statistics:\n");
   printf("Games played: %d\n", statistics[0]);
   printf("Games won: %d\n", statistics[1]);
   printf("Games lost: %d\n", statistics[2]);
   printf("Opened cells: %d\n", statistics[3]);
-};
+}

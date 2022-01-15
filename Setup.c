@@ -33,13 +33,13 @@ int no_of_mines;
  Initializes all flags of the cell structs with 0.
  Places mines randomly on the field with placeMine().
  Determines the number of adjacent mines for each cell.
- Randomly opens one cell that is not a mine with openFirstCell().
+ Randomly opens one cell that is not a mine with open_first_cell().
 
  \returns pointer to a nested array of cells ( i.e. the newly generated field)
 
  */
 
-Cell** generateField(){
+Cell** generate_field(){
 // dynamically allocate memory for a nested array of cells according to grid size
 
   int g = grid_size, i, j;
@@ -59,88 +59,88 @@ Cell** generateField(){
   // initialize with default values
   for (i = 0; i < g; i++){
     for (j = 0; j < g; j++){
-      field[i][j] = (Cell) {.mine = 0, .adjacentMines = 0, .isOpened = 0, .isFlagged = 0};
+      field[i][j] = (Cell) {.adjacent_mines = 0, .is_flagged = 0, .is_mine = 0,  .is_opened = 0,};
     }
   }
 
   // randomly distribute no_of_mines
   for (i = 0; i < no_of_mines; i++){
-    placeMine(field);
+    place_mine(field);
   }
 
   // determine and save number of adjacent mines
   // always check before that index is not out of bounds
   for (int i = 0 ; i < grid_size; i++ ){
     for (int j = 0 ; j < grid_size; j++ ){
-      if (field[i][j].mine == 1) {
+      if (field[i][j].is_mine == 1) {
         continue;
       }
       if (j-1 >= 0) {
-        if (field[i][j-1].mine == 1){
-        field[i][j].adjacentMines +=1;
+        if (field[i][j-1].is_mine == 1){
+        field[i][j].adjacent_mines +=1;
         }
       }
       if (j+1 < grid_size) {
-        if (field[i][j+1].mine == 1) {
-          field[i][j].adjacentMines +=1;
+        if (field[i][j+1].is_mine == 1) {
+          field[i][j].adjacent_mines +=1;
         }
       }
       if (i+1 < grid_size) {
-        if (field[i+1][j].mine == 1) {
-          field[i][j].adjacentMines +=1;
+        if (field[i+1][j].is_mine == 1) {
+          field[i][j].adjacent_mines +=1;
         }
       }
       if (i-1 >= 0) {
-        if (field[i-1][j].mine == 1) {
-          field[i][j].adjacentMines +=1;
+        if (field[i-1][j].is_mine == 1) {
+          field[i][j].adjacent_mines +=1;
         }
       }
       if (i+1 < grid_size && j+1 < grid_size){
-        if (field[i+1][j+1].mine == 1) {
-          field[i][j].adjacentMines +=1;
+        if (field[i+1][j+1].is_mine == 1) {
+          field[i][j].adjacent_mines +=1;
         }
       }
       if (i-1 >= 0 && j-1 >= 0) {
-        if (field[i-1][j-1].mine == 1) {
-          field[i][j].adjacentMines +=1;
+        if (field[i-1][j-1].is_mine == 1) {
+          field[i][j].adjacent_mines +=1;
         }
       }
       if (i-1 >= 0 && j+1 < grid_size) {
-        if (field[i-1][j+1].mine == 1) {
-          field[i][j].adjacentMines +=1;
+        if (field[i-1][j+1].is_mine == 1) {
+          field[i][j].adjacent_mines +=1;
         }
       }
       if (i+1 < grid_size && j-1 >= 0) {
-        if (field[i+1][j-1].mine == 1) {
-          field[i][j].adjacentMines +=1;
+        if (field[i+1][j-1].is_mine == 1) {
+          field[i][j].adjacent_mines +=1;
         }
       }
     }
   }
 
   // randomly open one cell that is not a mine
-  openFirstCell(field);
+  open_first_cell(field);
   return field;
-};
+}
 
 
 /**
  Places a mine on the field.
 
  Generates random x and y coordinates.
- Checks that there is no mine on that cell yet and places a mine with placeMine(), else calls itself recursively until a free cell is targeted.
+ Checks that there is no mine on that cell yet and places a mine with place_mine(), else calls itself recursively until a free cell is targeted.
  (max. half the number of cells will contain a mine, so the recursion will eventually end)
 
  \param field a pointer to a nested array of cells
 
  */
-void placeMine(Cell** field){
+void place_mine(Cell** field){
   int x = rand() % grid_size;
   int y = rand() % grid_size;
-  if (field[x][y].mine == 0) {
-    field[x][y].mine = 1;
+  if (field[x][y].is_mine == 0) {
+    field[x][y].is_mine = 1;
   } else {
-    placeMine(field);
+    place_mine(field);
   }
 }
 
@@ -154,12 +154,12 @@ void placeMine(Cell** field){
  \param field a pointer to a nested array of cells
 
  */
-void openFirstCell(Cell** field){
+void open_first_cell(Cell** field){
   int x = rand() % grid_size;
   int y = rand() % grid_size;
-  if (field[x][y].mine != 1 && field[x][y].adjacentMines != 0) {
-    field[x][y].isOpened = 1;
+  if (field[x][y].is_mine != 1 && field[x][y].adjacent_mines != 0) {
+    field[x][y].is_opened = 1;
   } else {
-    openFirstCell(field);
+    open_first_cell(field);
   }
 }

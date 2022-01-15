@@ -3,8 +3,8 @@
 
 extern int statistics[4];
 //FUNCTION PROTOTYPES
-void loadStatistics();
-void saveStatistics();
-void printStatistics();
+void load_statistics();
+void save_statistics();
+void print_statistics();
 
 #endif
