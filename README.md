@@ -20,6 +20,7 @@ The program accepts two command line arguments to define the size of a square gr
 A cell is revealed by entering its coordinates in the format 'A2', i.e. capital letter followed by a number.
 A cell is flagged by entering its coordinates with a preceding '?', i.e. '?A2'.
 Flagged cells can still be revealed later.
+Additional characters entered after the coordinates will be ignored.
 
 The player wins when 
 - all cells without mines are revealed
