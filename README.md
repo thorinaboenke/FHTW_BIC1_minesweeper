@@ -3,7 +3,7 @@ Thorina Boenke
 
 # Minesweeper
 ## Compilation
-gcc -std=c99 -Wall -Wextra -pedantic -Wno-unused-parameter -Iinclude Main.c Gamestatistics.c Setup.c -o minesweeper
+gcc -std=c99 -Wall -Wextra -pedantic -Wno-unused-parameter Main.c Gamestatistics.c Setup.c -o minesweeper
 
 ## Execution
 ```
