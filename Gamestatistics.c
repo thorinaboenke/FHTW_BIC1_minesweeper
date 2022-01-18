@@ -21,17 +21,13 @@ int statistics[4]={0,0,0,0};
  If a player has already played and statistics are saved in the same directory in a .txt file under their name they are read into statistics array and printed to the screen with print_statistics().
  */
 void load_statistics(){
-  char filename[25];
-  fflush(stdin);
+  char temp[256];
+  char filename[30];
   printf("Please enter your name (20 characters max.):\n");
-  fgets(filename, 21, stdin);
-  fflush(stdin);
-  //fgets puts a newline character, so remove it first
-  int len = strlen(filename);
-  if(filename[len-1] == '\n'){
-    filename[len-1] = 0;
-    }
-  // copy to global variable name
+  fgets(temp, 256, stdin);
+  strncpy(filename, temp, 20);
+  filename[20] = '\0';
+  // copy to global variable name, name then used to save statistics
   strcpy(name, filename);
   strcat(filename, ".txt");
   FILE* f;
