@@ -315,7 +315,7 @@ No: calls save_statistics(), frees the memory for the current playing field, exi
 
 int play_again(Cell **field){
 char input[2];
-printf("Would you like to play again? y/n \n");
+printf("Would you like to play again? Hit 'y' for yes or any other key to quit. \n");
 scanf("%c", &input[0]);
 char temp[256];
 fgets(temp, 256, stdin);
@@ -328,7 +328,7 @@ fgets(temp, 256, stdin);
     free(field);
     return 1;
   }
-  else if (input[0] == 'n' || input[0] == 'N' ) {
+  else {
     save_statistics();
     printf("Ok, goodbye. \n");
     for (int i = 0; i < grid_size; i++){
@@ -337,10 +337,5 @@ fgets(temp, 256, stdin);
     free(field);
     exit(0);
     return 1;
-  }
-  else {
-    printf("Please enter either y or n\n");
-    play_again(field);
-    return 0;
   }
 }
