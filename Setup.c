@@ -15,7 +15,7 @@ Cell **field;
 
 /**
 Grid size for the playing field.
-Grid size for the playing field.Can be passed as a command line argument when starting the program, else defaults to 10x10.
+Grid size for the playing field. Can be passed as a command line argument when starting the program, else defaults to 10x10.
  */
 int grid_size;
 
@@ -24,20 +24,6 @@ Number of mines for the playing field.
 Number of mines for the playing field. Can be passed as a command line argument when starting the program, else defaults to 25.
  */
 int no_of_mines;
-
-/**
- Generates new playing field.
-
- Generates new playing field.
- Allocates memory dynamically for a nested array of cells according to grid size.
- Initializes all flags of the cell structs with 0.
- Places mines randomly on the field with placeMine().
- Determines the number of adjacent mines for each cell.
- Randomly opens one cell that is not a mine with open_first_cell().
-
- \returns pointer to a nested array of cells ( i.e. the newly generated field)
-
- */
 
 Cell** generate_field(){
 // dynamically allocate memory for a nested array of cells according to grid size
@@ -123,17 +109,6 @@ Cell** generate_field(){
   return field;
 }
 
-
-/**
- Places a mine on the field.
-
- Generates random x and y coordinates.
- Checks that there is no mine on that cell yet and places a mine with place_mine(), else calls itself recursively until a free cell is targeted.
- (max. half the number of cells will contain a mine, so the recursion will eventually end)
-
- \param field a pointer to a nested array of cells
-
- */
 void place_mine(Cell **field){
   int x = rand() % grid_size;
   int y = rand() % grid_size;
@@ -144,16 +119,6 @@ void place_mine(Cell **field){
   }
 }
 
-/**
- Opens the first cell.
-
- Generates random x and y coordinates.
- Checks that there is no mine on that cell and opens it, else calls itself recursively until a cell is targeted that does not contain a mine.
- (max. half the number of cells will contain a mine, so the recursion will eventually end)
-
- \param field a pointer to a nested array of cells
-
- */
 void open_first_cell(Cell **field){
   int x = rand() % grid_size;
   int y = rand() % grid_size;

@@ -1,5 +1,7 @@
 /** \file
-* \brief This file contains the main program for a minesweeper game */
+ * \author Thorina Boenke
+ * \date 2022-01-18
+ * \brief This file contains the main program for a minesweeper game */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

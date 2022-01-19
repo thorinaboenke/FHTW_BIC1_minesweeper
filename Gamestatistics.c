@@ -15,11 +15,7 @@ char name[25];
  */
 int statistics[4]={0,0,0,0};
 
-/**
- Loads player statistics.
 
- If a player has already played and statistics are saved in the same directory in a .txt file under their name they are read into statistics array and printed to the screen with print_statistics().
- */
 void load_statistics(){
   char temp[256];
   char filename[30];
@@ -27,7 +23,7 @@ void load_statistics(){
   fgets(temp, 256, stdin);
   strncpy(filename, temp, 20);
   filename[20] = '\0';
-  // copy to global variable name, name then used to save statistics
+  // copy to global variable name, name is then used in save_statistics()
   strcpy(name, filename);
   strcat(filename, ".txt");
   FILE* f;
@@ -53,12 +49,6 @@ void load_statistics(){
   print_statistics();
 }
 
-
-/**
-  Saves player statistics
-
-  Saves player statistics from statistics array into .txt file under the players name
- */
 void save_statistics(){
   statistics[0]++; // games played
   printf("Saving statistics.\n");
@@ -84,13 +74,6 @@ void save_statistics(){
   }
 }
 
-
-/**
-Prints player statistics
-
-Prints player statistics (games played, games won, games lost, openend cells) to the screen, used by load_statistics().
-
- */
 void print_statistics(){
   printf("Player %s\n", name);
   printf("Your statistics:\n");
