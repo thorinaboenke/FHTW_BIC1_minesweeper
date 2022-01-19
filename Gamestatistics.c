@@ -20,6 +20,7 @@ void load_statistics(){
   char temp[256];
   char filename[30];
   printf("Please enter your name (20 characters max.):\n");
+  // not ideal solution better getc until EOF to clear buffer?
   fgets(temp, 256, stdin);
   strncpy(filename, temp, 20);
   filename[20] = '\0';

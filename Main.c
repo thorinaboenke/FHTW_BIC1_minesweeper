@@ -131,9 +131,9 @@ void print_field(Cell **field){
  */
 void guess(Cell **field){
   printf("Enter the cell you want to target in the format A2 and hit Enter.\n");
-  char str[5];
-  fgets(str, 5, stdin);
-  fflush(stdin);
+  // not ideal solution, can only handle input up to str length, could also read single characters until EOF to clear buffer
+  char str[256];
+  fgets(str, 256, stdin);
   int x;
   int y;
 
@@ -315,9 +315,10 @@ No: calls save_statistics(), frees the memory for the current playing field, exi
 
 int play_again(Cell **field){
 char input[2];
- printf("Would you like to play again? y/n \n");
- scanf("%c", &input[0]);
- fflush(stdin);
+printf("Would you like to play again? y/n \n");
+scanf("%c", &input[0]);
+char temp[256];
+fgets(temp, 256, stdin);
   if(input[0] == 'y' ||input[0] == 'Y'){
     save_statistics();
     printf("Ok, let's play again. \n");
